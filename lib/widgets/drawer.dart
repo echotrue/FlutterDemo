@@ -77,6 +77,13 @@ class AppDrawer extends StatelessWidget {
           onTap: () {
             Navigator.pushNamed(context, '/sync');
           },
+        ),
+        ListTile(
+          leading: Icon(Icons.bookmark),
+          title: Text('News list'),
+          onTap: () {
+            Navigator.pushNamed(context, '/news_list');
+          },
         )
       ]),
     );
