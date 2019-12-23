@@ -47,6 +47,16 @@ class AppDrawer extends StatelessWidget {
         ListTile(
           leading: Icon(Icons.bookmark),
           title: Text(
+            '布局',
+            style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w900),
+          ),
+          onTap: () {
+            Navigator.pushNamed(context, '/line');
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.bookmark),
+          title: Text(
             'Form demo',
             style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w900),
           ),
@@ -59,6 +69,13 @@ class AppDrawer extends StatelessWidget {
           title: Text('Button'),
           onTap: () {
             Navigator.pushNamed(context, '/button');
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.bookmark),
+          title: Text('异步加载'),
+          onTap: () {
+            Navigator.pushNamed(context, '/sync');
           },
         )
       ]),
