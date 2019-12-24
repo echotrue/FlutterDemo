@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/common/http/httpEntity.dart';
-import 'package:flutter_demo/common/http/httpUtils.dart';
 
 class NewsList extends StatefulWidget {
   _MyNewsList createState() => _MyNewsList();
@@ -11,34 +10,36 @@ class _MyNewsList extends State<NewsList> {
 
   bool isLoading = false;
 
-  List items = new List();
+  static const endTag = 'end';
+  var items = <dynamic>[endTag];
 
+//  List items = new List();
+
+  // get data
   _getMoreData() async {
     if (!isLoading) {
       setState(() {
         isLoading = true;
       });
     }
-
     final response = await getNewsList();
     setState(() {
       isLoading = false;
-      if(response['data'] == null){
-        print('没有更多数据');
-      }
-      items.addAll(response['data']);
-//      items = response['data'];
+      //
+      items.insertAll(items.length - 1, response['data']);
     });
   }
 
   void initState() {
-    this._getMoreData();
     super.initState();
-
+    //初始获取数据
+    this._getMoreData();
+    //滑动到底部获取数据
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
-          _scrollController.position.maxScrollExtent) {
-        _getMoreData();
+              _scrollController.position.maxScrollExtent &&
+          items.length < 20) {
+        this._getMoreData();
       }
     });
   }
@@ -50,33 +51,59 @@ class _MyNewsList extends State<NewsList> {
 
   Widget _buildList() {
     return ListView.builder(
-      itemCount: items.length + 1,
+      itemCount: items.length - 1,
+      itemExtent: 100.0,
       itemBuilder: (BuildContext context, int index) {
-        print(index.toString() + '====' + items.length.toString());
-        if (index == items.length) {
-          return new Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: new Center(
-              child: new Opacity(
-                opacity: isLoading ? 1.0 : 00,
-                child: new CircularProgressIndicator(),
+        if (index == (items.length - 2)) {
+          //最后一个
+          print('===== last one');
+          if (items.length > 20) {
+            return Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.all(16.0),
+                child: Text(
+                  "没有更多了",
+                  style: TextStyle(color: Colors.grey),
+                ));
+          } else {
+            return Container(
+              padding: const EdgeInsets.all(16.0),
+              alignment: Alignment.center,
+              child: SizedBox(
+                  width: 24.0,
+                  height: 24.0,
+                  child: CircularProgressIndicator(strokeWidth: 2.0)),
+            );
+          }
+        } else {
+          return Card(
+            child: ListTile(
+              leading: Image.network(
+                items[index]['imgList'][0].toString().trim(),
+                fit: BoxFit.cover,
+                width: 100.0,
+                loadingBuilder: (BuildContext context, Widget child,
+                    ImageChunkEvent loadingProgress) {
+                  if (loadingProgress == null) {
+                    return child;
+                  }
+                  return RefreshProgressIndicator();
+                  /*return CircularProgressIndicator(
+                    backgroundColor: Colors.grey,
+                    semanticsLabel: "loading",
+                  );*/
+                },
               ),
+              title: Text(items[index]['title']),
+              subtitle: Text(items[index]['source']),
+              onTap: () {
+                print(items[index]);
+              },
+              trailing: Icon(Icons.chevron_right),
+              isThreeLine: true,
             ),
           );
         }
-        return Card(
-          child: ListTile(
-            leading: Image(
-              image: NetworkImage(items[index]['imgList'][0]),
-              width: 100.0,
-            ),
-            title: Text(items[index]['title']),
-            onTap: () {
-              print(items[index]);
-            },
-          ),
-        );
-//        return ;
       },
       controller: _scrollController,
     );
@@ -85,7 +112,7 @@ class _MyNewsList extends State<NewsList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("List tile"),
+        title: Text("ListView"),
         centerTitle: true,
       ),
       body: Container(

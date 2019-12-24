@@ -31,19 +31,6 @@ class AppDrawer extends StatelessWidget {
             },
           ),
         ),
-
-        /*DrawerHeader(
-          child: SizedBox(
-            width: 30.0,
-            height: 30.0,
-            child: CircleAvatar(
-              child: Text('H'),
-            ),
-          ),
-          decoration: BoxDecoration(
-            color: Colors.blue,
-          ),
-        ),*/
         ListTile(
           leading: Icon(Icons.bookmark),
           title: Text(
