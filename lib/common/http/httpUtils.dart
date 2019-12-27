@@ -53,7 +53,7 @@ class HttpUtils {
       result = response.data;
 //      print('response：' + response.toString());
     } on DioError catch (e) {
-//      print('request error:' + e.toString());
+      print('request error:' + e.toString());
     }
     return result;
   }

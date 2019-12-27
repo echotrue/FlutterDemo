@@ -1,8 +1,6 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/Button.dart';
-import 'package:flutter_demo/form.dart';
+import 'package:flutter_demo/routes/form.dart';
 import 'package:flutter_demo/routes/future.dart';
 import 'package:flutter_demo/routes/home.dart';
 import 'package:flutter_demo/routes/line.dart';
@@ -19,10 +17,14 @@ class App extends StatelessWidget {
       initialRoute: '/',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: Colors.blue,
-        primarySwatch: Colors.blue,
-        fontFamily: 'AppFont',
-      ),
+          primaryColor: Colors.blue,
+          primarySwatch: Colors.blue,
+          fontFamily: 'AppFont',
+          textTheme: TextTheme(
+            headline: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+            title: TextStyle(fontSize: 16.0),
+            body1: TextStyle(fontSize: 14.0),
+          )),
       routes: {
         '/': (context) => Home(title: appTitle),
         '/form': (context) => CustomForm(),

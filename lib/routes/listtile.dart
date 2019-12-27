@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/common/http/httpEntity.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+//import 'package:transparent_image/transparent_image.dart';
 
 class NewsList extends StatefulWidget {
   _MyNewsList createState() => _MyNewsList();
@@ -50,13 +52,13 @@ class _MyNewsList extends State<NewsList> {
   }
 
   Widget _buildList() {
-    return ListView.builder(
+    return ListView.separated(
+      physics: BouncingScrollPhysics(),
       itemCount: items.length - 1,
-      itemExtent: 100.0,
+//      itemExtent: 80.0,
       itemBuilder: (BuildContext context, int index) {
         if (index == (items.length - 2)) {
           //最后一个
-          print('===== last one');
           if (items.length > 20) {
             return Container(
                 alignment: Alignment.center,
@@ -76,9 +78,22 @@ class _MyNewsList extends State<NewsList> {
             );
           }
         } else {
-          return Card(
+          return Center(
             child: ListTile(
-              leading: Image.network(
+              leading: CachedNetworkImage(
+                imageUrl: items[index]['imgList'][0].toString().trim(),
+                placeholder: (context, url) => CircularProgressIndicator(),
+                errorWidget: (context, url, error) => Icon(Icons.error),
+                width: 100.0,
+                fit: BoxFit.cover,
+              ),
+              /*leading: FadeInImage.memoryNetwork(
+                placeholder: kTransparentImage,
+                image: items[index]['imgList'][0].toString().trim(),
+                fit: BoxFit.cover,
+                width: 100.0,
+              ),*/
+              /*leading: Image.network(
                 items[index]['imgList'][0].toString().trim(),
                 fit: BoxFit.cover,
                 width: 100.0,
@@ -88,24 +103,39 @@ class _MyNewsList extends State<NewsList> {
                     return child;
                   }
                   return RefreshProgressIndicator();
-                  /*return CircularProgressIndicator(
+                  */ /*return CircularProgressIndicator(
                     backgroundColor: Colors.grey,
                     semanticsLabel: "loading",
-                  );*/
+                  );*/ /*
                 },
+              ),*/
+              title: Text(
+                items[index]['title'],
+                maxLines: 2,
+                style: Theme.of(context).textTheme.body1,
               ),
-              title: Text(items[index]['title']),
-              subtitle: Text(items[index]['source']),
+              subtitle: Text(
+                items[index]['source'],
+              ),
               onTap: () {
                 print(items[index]);
               },
-              trailing: Icon(Icons.chevron_right),
-              isThreeLine: true,
+              trailing: Container(
+                  child: Icon(
+                Icons.chevron_right,
+                size: 46.0,
+              )),
             ),
           );
         }
       },
       controller: _scrollController,
+      separatorBuilder: (BuildContext context, int index) {
+        return Divider(
+          indent: 20.0,
+          endIndent: 20.0,
+        );
+      },
     );
   }
 
@@ -116,7 +146,7 @@ class _MyNewsList extends State<NewsList> {
         centerTitle: true,
       ),
       body: Container(
-        child: _buildList(),
+        child: items.length == 1 ? new LinearProgressIndicator() : _buildList(),
       ),
       resizeToAvoidBottomPadding: false,
     );

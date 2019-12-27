@@ -10,13 +10,13 @@ class MyFuture extends StatelessWidget {
       ),
       body: Center(
         child: FutureBuilder(
-          future: getNewsList(),
+          future: mockNetworkData(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasError) {
                 return Text("Error: ${snapshot.error}");
               } else {
-                return Text("Contents : ${snapshot.data['code']}");
+                return Text("Contents : ${snapshot.data}");
               }
             }
             return CircularProgressIndicator();
