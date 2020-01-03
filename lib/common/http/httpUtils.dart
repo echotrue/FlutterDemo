@@ -5,7 +5,9 @@ class HttpUtils {
   static Dio dio;
 
   // default options
-  static const String API_PREFIX = 'https://www.mxnzp.com/api';
+//  static const String API_PREFIX = 'https://www.mxnzp.com/api';
+  static const String API_PREFIX = 'http://192.168.1.197:8003/ci/api';///user/login
+
   static const int CONNECT_TIMEOUT = 10000;
   static const int RECEIVE_TIMEOUT = 3000;
 

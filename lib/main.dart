@@ -5,6 +5,7 @@ import 'package:flutter_demo/routes/future.dart';
 import 'package:flutter_demo/routes/home.dart';
 import 'package:flutter_demo/routes/line.dart';
 import 'package:flutter_demo/routes/listtile.dart';
+import 'package:flutter_demo/routes/login.dart';
 
 void main() => runApp(App());
 
@@ -32,6 +33,7 @@ class App extends StatelessWidget {
         '/line': (context) => Line(),
         '/sync': (context) => MyFuture(),
         '/news_list': (context) => NewsList(),
+        '/login': (context) => LoginForm(),
       },
     );
   }
