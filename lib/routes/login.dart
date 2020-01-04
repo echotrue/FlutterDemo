@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/common/app_style.dart';
 import 'package:flutter_demo/common/http/httpUtils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginForm extends StatefulWidget {
   _LoginState createState() => _LoginState();
@@ -100,10 +101,29 @@ class _LoginState extends State<LoginForm> {
     if ((_formKey.currentState as FormState).validate()) {
 //      SizedBox(width: 24,height: 24,child: CircularProgressIndicator());
       showLoading(context);
-//      await HttpUtils.request('/user/login',method: HttpUtils.GET,data: {username:_formKey.currentState.us});
-//      print('验证通过');
-//      sleep(Duration(seconds: 6));
-//      Navigator.pop(context);
+
+      var user;
+      try {
+        user = await HttpUtils.request('/user/login',
+            method: HttpUtils.POST,
+            data: {
+              'username': usernameController.text,
+              'password': passwordController.text
+            });
+      } catch (e) {
+        showToast(e.toString());
+      } finally {
+        //关闭loading
+        Navigator.pop(context);
+
+        if (user['code'] != 200) {
+          showToast(user['message']);
+        } else {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.setString('token', user['token']);
+          Navigator.of(context).pushNamed('/sync');
+        }
+      }
     }
   }
 }

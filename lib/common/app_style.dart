@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/widgets/loading.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 TextStyle titleStyle() {
   return const TextStyle(
@@ -28,4 +29,13 @@ showLoading(context) {
       builder: (BuildContext context) {
         return LoadingDialog(text: '加载中');
       });
+}
+
+showToast(String msg) {
+  Fluttertoast.showToast(
+    msg: msg,
+    toastLength: Toast.LENGTH_LONG,
+    gravity: ToastGravity.CENTER,
+    timeInSecForIos: 2,
+  );
 }
