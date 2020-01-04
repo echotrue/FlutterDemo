@@ -120,8 +120,12 @@ class _LoginState extends State<LoginForm> {
           showToast(user['message']);
         } else {
           SharedPreferences preferences = await SharedPreferences.getInstance();
-          await preferences.setString('token', user['token']);
-          Navigator.of(context).pushNamed('/sync');
+          final setToken = await preferences.setString('token', user['token']);
+          if (setToken) {
+            Navigator.of(context).pushNamed('/sync');
+          } else {
+            print('保存token失败');
+          }
         }
       }
     }
