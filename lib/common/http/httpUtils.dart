@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HttpUtils {
   // global dio object
@@ -6,7 +7,9 @@ class HttpUtils {
 
   // default options
 //  static const String API_PREFIX = 'https://www.mxnzp.com/api';
-  static const String API_PREFIX = 'http://192.168.1.197:8003/ci/api';///user/login
+  static const String API_PREFIX = 'http://192.168.1.197:8003/ci/api';
+
+  ///user/login
 
   static const int CONNECT_TIMEOUT = 10000;
   static const int RECEIVE_TIMEOUT = 3000;
@@ -36,6 +39,10 @@ class HttpUtils {
     data = data ?? {};
     method = method ?? 'GET';
 
+    //token
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
     data.forEach((key, value) {
       if (url.indexOf(key) != -1) {
         url = url.replaceAll(':$key', value.toString());
@@ -51,7 +58,9 @@ class HttpUtils {
 
     try {
       Response response = await dio.request(url,
-          data: data, options: new Options(method: method));
+          data: data,
+          options:
+              new Options(method: method, headers: {"Access-Token": token}));
       result = response.data;
 //      print('response：' + response.toString());
     } on DioError catch (e) {

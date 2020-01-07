@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/common/app_style.dart';
 import 'package:flutter_demo/common/http/httpUtils.dart';
@@ -48,7 +46,7 @@ class _LoginState extends State<LoginForm> {
           children: <Widget>[
             Form(
               key: _formKey,
-              autovalidate: true,
+//              autovalidate: true,
               child: Column(
                 children: <Widget>[
                   Text("DGame CI System",
@@ -120,9 +118,25 @@ class _LoginState extends State<LoginForm> {
           showToast(user['message']);
         } else {
           SharedPreferences preferences = await SharedPreferences.getInstance();
-          final setToken = await preferences.setString('token', user['token']);
+          final setToken =
+              await preferences.setString('token', user['result']['token']);
           if (setToken) {
-            Navigator.of(context).pushNamed('/sync');
+            /*var userInfo = getUserInfo();
+            userInfo.then((v) async {
+              if (v['code'] != 200) {
+                showToast(v['message']);
+                return false;
+              }
+              print(v['result']);
+              await preferences.setString('user_info', jsonEncode(v['result']));
+
+              return true;
+            }, onError: (e) {
+              showToast(e.toString());
+              return false;
+            });*/
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil('/', (route) => route == null);
           } else {
             print('保存token失败');
           }

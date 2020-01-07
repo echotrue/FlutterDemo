@@ -1,17 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class Line extends StatelessWidget {
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('布局'),
-        centerTitle: true,
-      ),
-      body: Container(
-        width: 100.0,
-        color: Colors.red,
-        child: Row(
-          children: <Widget>[],
+    final title = 'Fade in images';
+
+    return new MaterialApp(
+      title: title,
+      home: new Scaffold(
+        appBar: new AppBar(
+          title: new Text(title),
+        ),
+        body: new Stack(
+          children: <Widget>[
+            new Center(child: new CircularProgressIndicator()),
+            new Center(
+              child: new FadeInImage.memoryNetwork(
+                placeholder: kTransparentImage,
+                image:
+                'https://cdn.jsdelivr.net/gh/flutterchina/website@1.0/images/flutter-mark-square-100.png',
+              ),
+            ),
+          ],
         ),
       ),
     );

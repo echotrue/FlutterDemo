@@ -64,9 +64,9 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: BookAntiqua
+    - family: HeadlandOne
       fonts:
-        - asset: fonts/Book_Antiqua.ttf
+        - asset: fonts/HeadlandOne-Regular.ttf
     - family: AppFont
       fonts:
         - asset: fonts/webfont.ttf
