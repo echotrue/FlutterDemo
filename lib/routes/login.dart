@@ -59,9 +59,11 @@ class _LoginState extends State<LoginForm> {
                       return v.trim().length > 0 ? null : "账号不能为空";
                     },
                     decoration: InputDecoration(
-                        border: UnderlineInputBorder(),
-                        hintText: '用户名',
-                        prefixIcon: Icon(Icons.account_circle)),
+//                        contentPadding: EdgeInsets.only(bottom: 2),
+                      border: UnderlineInputBorder(),
+                      hintText: '用户名',
+                      prefixIcon: Icon(Icons.account_circle),
+                    ),
                   ),
                   SizedBox(height: 20),
                   TextFormField(

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/common/app_style.dart';
 import 'package:flutter_demo/common/http/httpEntity.dart';
+import 'package:flutter_demo/common/skeleton.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:skeleton_text/skeleton_text.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -10,11 +13,12 @@ class AppDrawer extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
-            return showToast('error');
+            return showToast(snapshot.data['msg']);
           }
           var userInfo = snapshot.data['result'];
 //          print(userInfo);
           return Drawer(
+//            elevation: 10,
             child: ListView(padding: EdgeInsets.zero, children: <Widget>[
               Container(
                 width: 60.0,
@@ -31,14 +35,6 @@ class AppDrawer extends StatelessWidget {
                       Navigator.of(context).pushNamed('/user_center');
                     },
                   ),
-                  /*onDetailsPressed: () {
-                    return showDialog(
-                        context: context,
-                        child: AlertDialog(
-                          title: Text('详细信息'),
-                          content: Text('~'),
-                        ));
-                  },*/
                 ),
               ),
               ListTile(
@@ -109,17 +105,24 @@ class AppDrawer extends StatelessWidget {
             Container(
               width: 60.0,
               child: UserAccountsDrawerHeader(
-                accountName: Text('--'),
-                accountEmail: Text('--'),
-                currentAccountPicture: GestureDetector(
-                  child: CircleAvatar(
-                    backgroundColor: Colors.grey,
-                    radius: 100.0,
-                    foregroundColor: Color(0x55000000),
+                accountName: Shimmer.fromColors(
+                    child: Text('Username'),
+                    baseColor: Colors.grey[300],
+                    highlightColor: Colors.white),
+                accountEmail: Shimmer.fromColors(
+                    child: Text('a*****@email.com'),
+                    baseColor: Colors.grey[300],
+                    highlightColor: Colors.white),
+                currentAccountPicture: Shimmer.fromColors(
+                  baseColor: Colors.grey[300],
+                  highlightColor: Colors.white,
+                  child: Container(
+                    width: 70,
+                    height: 70,
+                    decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.circular(100.0)),
                   ),
-                  onTap: () {
-                    Navigator.of(context).pushNamed('/user_center');
-                  },
                 ),
               ),
             ),

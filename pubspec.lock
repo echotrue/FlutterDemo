@@ -212,6 +212,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.2+2"
+  shimmer:
+    dependency: "direct main"
+    description:
+      name: shimmer
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
+  skeleton_text:
+    dependency: "direct main"
+    description:
+      name: skeleton_text
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   sky_engine:
     dependency: transitive
     description: flutter
