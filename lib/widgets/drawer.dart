@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_demo/common/app_style.dart';
 import 'package:flutter_demo/common/http/httpEntity.dart';
 import 'package:flutter_demo/common/skeleton.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 
@@ -35,16 +36,33 @@ class AppDrawer extends StatelessWidget {
                       Navigator.of(context).pushNamed('/user_center');
                     },
                   ),
+                  otherAccountsPictures: <Widget>[
+                    IconButton(
+                      icon: Icon(Icons.power_settings_new, size: 30),
+                      color: Colors.white,
+                      onPressed: () async {
+                        SharedPreferences preferences =
+                            await SharedPreferences.getInstance();
+                        final ok = await preferences.remove('token');
+                        if (ok) {
+                          showToast('退出成功');
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              '/login', ModalRoute.withName('/login'));
+                        }
+                      },
+                      tooltip: '退出登录',
+                    )
+                  ],
                 ),
               ),
               ListTile(
                 leading: Icon(Icons.bookmark),
                 title: Text(
-                  '布局',
+                  '项目管理',
                   style: Theme.of(context).textTheme.body1,
                 ),
                 onTap: () {
-                  Navigator.pushNamed(context, '/line');
+                  Navigator.pushNamed(context, '/project');
                 },
               ),
               ListTile(

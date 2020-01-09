@@ -19,11 +19,17 @@ Future getUserInfo() {
 
 // Edit user
 Future editUserInfo(Map<String, dynamic> userInfo) async {
-  //user_id: 1
-  //user_name: "admin"
-  //user_realname: "Administrator"
-  //user_email: "administrator@dgame.com"
-  //user_phone: "1300000000"
   return await HttpUtils.request('/user',
       method: HttpUtils.PUT, data: userInfo);
 }
+
+// Project List
+// pageNo=1&pageSize=10
+Future projectList(Map<String, int> params) {
+  return Future.delayed(Duration(milliseconds: 300), () async {
+    return await HttpUtils.request('/system/project',
+        method: HttpUtils.GET, data: params);
+  });
+}
+
+///cloud/regions?pageNo=1&pageSize=10

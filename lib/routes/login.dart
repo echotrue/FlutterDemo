@@ -60,7 +60,14 @@ class _LoginState extends State<LoginForm> {
                     },
                     decoration: InputDecoration(
 //                        contentPadding: EdgeInsets.only(bottom: 2),
-                      border: UnderlineInputBorder(),
+                      border: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(100.0)),
+                          gapPadding: 0),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(100.0)),
+                        borderSide: BorderSide(color: Colors.blueAccent),
+                      ),
                       hintText: '用户名',
                       prefixIcon: Icon(Icons.account_circle),
                     ),
@@ -73,11 +80,18 @@ class _LoginState extends State<LoginForm> {
                       return value.trim().length > 0 ? null : "密码不能为空";
                     },
                     decoration: InputDecoration(
-                        border: UnderlineInputBorder(),
+                        border: OutlineInputBorder(
+                            borderRadius:
+                            BorderRadius.all(Radius.circular(100.0)),
+                            gapPadding: 0),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(100.0)),
+                          borderSide: BorderSide(color: Colors.blueAccent),
+                        ),
                         hintText: '密码',
                         prefixIcon: Icon(Icons.lock)),
                   ),
-                  SizedBox(height: 40),
+                  SizedBox(height:30),
                   Container(
 //                    margin: EdgeInsets.only(top: 80),
                     width: double.infinity,
@@ -86,6 +100,9 @@ class _LoginState extends State<LoginForm> {
                       child: Text('Login'),
                       color: Colors.blueAccent,
                       textColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(100.0))
+                      ),
                     ),
                   ),
                 ],

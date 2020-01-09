@@ -3,7 +3,7 @@ import 'package:flutter_demo/Button.dart';
 import 'package:flutter_demo/routes/edit_user.dart';
 import 'package:flutter_demo/routes/future.dart';
 import 'package:flutter_demo/routes/home.dart';
-import 'package:flutter_demo/routes/line.dart';
+import 'package:flutter_demo/routes/project.dart';
 import 'package:flutter_demo/routes/listtile.dart';
 import 'package:flutter_demo/routes/login.dart';
 import 'package:flutter_demo/routes/user_center.dart';
@@ -25,11 +25,11 @@ class App extends StatelessWidget {
           primaryColor: Colors.blue,
           primarySwatch: Colors.blue,
           fontFamily: 'HeadlandOne , AppFont',
-          textTheme: TextTheme(
+          /*textTheme: TextTheme(
             headline: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
             title: TextStyle(fontSize: 16.0),
             body1: TextStyle(fontSize: 14.0),
-          )),
+          )*/),
       navigatorKey: navigatorKey,
       onGenerateRoute: onGenerateRoute,
       /*routes: {
@@ -52,7 +52,7 @@ class App extends StatelessWidget {
       '/user_center': UserCenter(),
       '/edit_user': EditUser(),
       '/button': CustomButton(),
-      '/line': Line(),
+      '/project': ProjectList(),
       '/sync': MyFuture(),
       '/news_list': NewsList(),
       '/login': LoginForm(),

@@ -46,7 +46,11 @@ class _EditUser extends State<EditUser> {
       backgroundColor: Colors.white,
       appBar: AppBar(
 //        backgroundColor: Colors.white,
+        toolbarOpacity: 1,
+        bottomOpacity: 0.1,
         elevation: 0,
+        title: Text('编辑资料'),
+        centerTitle: true,
 //        automaticallyImplyLeading: false,
         /*leading: IconButton(
           icon: Icon(
@@ -58,7 +62,12 @@ class _EditUser extends State<EditUser> {
           },
         ),*/
         actions: <Widget>[
-          Row(
+          IconButton(
+            icon: Icon(Icons.save),
+            onPressed: _submit,
+//            color: Colors.white,
+          ),
+          /*Row(
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(right: 20),
@@ -68,7 +77,7 @@ class _EditUser extends State<EditUser> {
                 ),
               ),
             ],
-          ),
+          ),*/
         ],
       ),
       body: Padding(
