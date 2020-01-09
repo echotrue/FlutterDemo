@@ -12,10 +12,9 @@ Future<Map<String, dynamic>> getNewsList() async {
 
 // Get user info todo delete delayed
 Future getUserInfo() {
-  return Future.delayed(Duration(seconds: 1), () async {
+  return Future.delayed(Duration(milliseconds: 300), () async {
     return await HttpUtils.request('/user/info');
   });
-//  return await HttpUtils.request('/user/info');
 }
 
 // Edit user

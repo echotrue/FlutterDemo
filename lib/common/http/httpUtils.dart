@@ -49,8 +49,8 @@ class HttpUtils {
       }
     });
 
-    print('request url :[' + method + ' ' + url + ']');
-    print('request params:' + data.toString());
+//    print('request url :[' + method + ' ' + url + ']');
+//    print('request params:' + data.toString());
 
     Dio dio = createInstance();
 

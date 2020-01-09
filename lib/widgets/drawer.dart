@@ -29,7 +29,7 @@ class AppDrawer extends StatelessWidget {
                     child: CircleAvatar(
                       backgroundImage: NetworkImage(userInfo['user_avatar']),
                       radius: 100.0,
-                      foregroundColor: Color(0x55000000),
+//                      foregroundColor: Color(0x55000000),
                     ),
                     onTap: () {
                       Navigator.of(context).pushNamed('/user_center');
