@@ -26,8 +26,7 @@ class _ProjectList extends State<ProjectList> {
     _getMoreData();
     //滑动到底部
     _scrollController.addListener(() {
-      if (_scrollController.position.pixels ==
-          _scrollController.position.maxScrollExtent) {
+      if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
         _getMoreData();
       }
     });
@@ -44,12 +43,10 @@ class _ProjectList extends State<ProjectList> {
         isLoading = true;
       });
     }
-    final response =
-        await projectList({"pageNo": pageNo, "pageSize": pageSize});
+    final response = await projectList({"pageNo": pageNo, "pageSize": pageSize});
 
 //    print(response);
-    var step =
-        response['result']['pageNo'] >= response['result']['totalPage'] ? 0 : 1;
+    var step = response['result']['pageNo'] >= response['result']['totalPage'] ? 0 : 1;
 
     setState(() {
       isLoading = false;
@@ -91,10 +88,7 @@ class _ProjectList extends State<ProjectList> {
           return Container(
             padding: const EdgeInsets.all(16.0),
             alignment: Alignment.center,
-            child: SizedBox(
-                width: 24.0,
-                height: 24.0,
-                child: CircularProgressIndicator(strokeWidth: 2.0)),
+            child: SizedBox(width: 24.0, height: 24.0, child: CircularProgressIndicator(strokeWidth: 2.0)),
           );
         }
         return _buildItem(items[index]);
@@ -130,16 +124,37 @@ class _ProjectList extends State<ProjectList> {
           caption: '编辑',
           color: Colors.blue,
           icon: Icons.edit,
-//              onTap: () => _showSnackBar('More'),
+          onTap: () => _showSnackBar('More'),
         ),
         IconSlideAction(
           caption: '删除',
           color: Colors.red,
           icon: Icons.delete,
-//              onTap: () => _showSnackBar('Delete'),
+          onTap: () => _showSnackBar('Delete'),
         ),
       ],
     );
+  }
+
+  _showSnackBar(String action) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('提示？'),
+            content: Text('确定删除该条记录？'),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('取消'),
+                onPressed: () => Navigator.of(context).pop(false),
+              ),
+              FlatButton(
+                child: Text('确定'),
+                onPressed: () => Navigator.of(context).pop(true),
+              ),
+            ],
+          );
+        });
   }
 
   //构建骨架屏
@@ -169,17 +184,13 @@ class _ProjectList extends State<ProjectList> {
                 child: Container(
               width: 100,
               height: 10,
-              decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(100.0)),
+              decoration: BoxDecoration(color: Colors.grey[300], borderRadius: BorderRadius.circular(100.0)),
             )),
             subtitle: SkeletonAnimation(
                 child: Container(
               width: 200,
               height: 10,
-              decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(100.0)),
+              decoration: BoxDecoration(color: Colors.grey[300], borderRadius: BorderRadius.circular(100.0)),
             )),
             trailing: Container(
               child: Icon(
