@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/common/app_style.dart';
 import 'package:flutter_demo/common/http/httpEntity.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:shimmer/shimmer.dart';
@@ -65,7 +66,9 @@ class _ProjectList extends State<ProjectList> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushNamed('/project_edit');
+            },
             tooltip: '添加项目',
           ),
         ],
@@ -124,7 +127,9 @@ class _ProjectList extends State<ProjectList> {
           caption: '编辑',
           color: Colors.blue,
           icon: Icons.edit,
-          onTap: () => _showSnackBar('More'),
+          onTap: () {
+            Navigator.of(context).pushNamed('/project_edit');
+          },
         ),
         IconSlideAction(
           caption: '删除',

@@ -56,7 +56,7 @@ class _UserCenter extends State<UserCenter> {
           actions: <Widget>[
             Row(children: <Widget>[
               Padding(
-                padding: EdgeInsets.only(right: 20),
+                padding: EdgeInsets.only(right: 10),
 //                child: GestureDetector(
                 child: FlatButton(
                   onPressed: () {
