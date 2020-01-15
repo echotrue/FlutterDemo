@@ -49,21 +49,24 @@ class _LoginState extends State<LoginForm> {
 //              autovalidate: true,
               child: Column(
                 children: <Widget>[
-                  Text("DGame CI System",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 25)),
-                  SizedBox(height: 30),
+                  Image.asset('assets/images/logo.png'),
+                  SizedBox(height: 10),
+                  Text("DGame CI System", textAlign: TextAlign.center, style: TextStyle(fontSize: 15)),
+                  SizedBox(height: 20),
                   TextFormField(
                     controller: usernameController,
                     validator: (v) {
-                      return v.trim().length > 0 ? null : "账号不能为空";
+                      return v.trim().length > 0 ? null : "用户名不能为空";
                     },
+                    style: TextStyle(
+                      fontSize: 19,
+                    ),
                     decoration: InputDecoration(
-//                        contentPadding: EdgeInsets.only(bottom: 2),
-                      border: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(100.0)),
-                          gapPadding: 0),
+//                      hintStyle: TextStyle(
+//                        fontSize: 19,
+//                      ),
+                      contentPadding: EdgeInsets.all(0),
+                      border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(100.0)), gapPadding: 0),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(100.0)),
                         borderSide: BorderSide(color: Colors.blueAccent),
@@ -79,11 +82,13 @@ class _LoginState extends State<LoginForm> {
                     validator: (value) {
                       return value.trim().length > 0 ? null : "密码不能为空";
                     },
+                    style: TextStyle(
+                      fontSize: 19,
+                    ),
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius:
-                            BorderRadius.all(Radius.circular(100.0)),
-                            gapPadding: 0),
+                        contentPadding: EdgeInsets.all(0),
+                        border:
+                            OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(100.0)), gapPadding: 0),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(100.0)),
                           borderSide: BorderSide(color: Colors.blueAccent),
@@ -91,18 +96,17 @@ class _LoginState extends State<LoginForm> {
                         hintText: '密码',
                         prefixIcon: Icon(Icons.lock)),
                   ),
-                  SizedBox(height:30),
+                  SizedBox(height: 30),
                   Container(
 //                    margin: EdgeInsets.only(top: 80),
                     width: double.infinity,
+                    height: 40,
                     child: RaisedButton(
                       onPressed: _onLogin,
                       child: Text('Login'),
                       color: Colors.blueAccent,
                       textColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(100.0))
-                      ),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(100.0))),
                     ),
                   ),
                 ],
@@ -122,23 +126,20 @@ class _LoginState extends State<LoginForm> {
       var user;
       try {
         user = await HttpUtils.request('/user/login',
-            method: HttpUtils.POST,
-            data: {
-              'username': usernameController.text,
-              'password': passwordController.text
-            });
+            method: HttpUtils.POST, data: {'username': usernameController.text, 'password': passwordController.text});
       } catch (e) {
         showToast(e.toString());
       } finally {
         //关闭loading
         Navigator.pop(context);
 
-        if (user['code'] != 200) {
-          showToast(user['message']);
+        if (user == null || user['code'] != 200) {
+//          var msg = user == null ? '系统错误，请稍后重试！' : user['message'];
+//          showToast(msg);
+          print(user);
         } else {
           SharedPreferences preferences = await SharedPreferences.getInstance();
-          final setToken =
-              await preferences.setString('token', user['result']['token']);
+          final setToken = await preferences.setString('token', user['result']['token']);
           if (setToken) {
             /*var userInfo = getUserInfo();
             userInfo.then((v) async {
@@ -154,8 +155,7 @@ class _LoginState extends State<LoginForm> {
               showToast(e.toString());
               return false;
             });*/
-            Navigator.of(context)
-                .pushNamedAndRemoveUntil('/', (route) => route == null);
+            Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => route == null);
           } else {
             print('保存token失败');
           }
