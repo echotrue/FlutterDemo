@@ -14,10 +14,15 @@ class AppDrawer extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
+            Navigator.of(context).pushNamedAndRemoveUntil('login', ModalRoute.withName('/login'));
             return showToast(snapshot.data['msg']);
           }
+
+          if (snapshot.data == null || snapshot.data['code'] != 200) {
+            Navigator.of(context).pushNamedAndRemoveUntil('login', ModalRoute.withName('/login'));
+//            Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => route == null);
+          }
           var userInfo = snapshot.data['result'];
-//          print(userInfo);
           return Drawer(
 //            elevation: 10,
             child: ListView(padding: EdgeInsets.zero, children: <Widget>[
@@ -41,13 +46,11 @@ class AppDrawer extends StatelessWidget {
                       icon: Icon(Icons.power_settings_new, size: 30),
                       color: Colors.white,
                       onPressed: () async {
-                        SharedPreferences preferences =
-                            await SharedPreferences.getInstance();
+                        SharedPreferences preferences = await SharedPreferences.getInstance();
                         final ok = await preferences.remove('token');
                         if (ok) {
                           showToast('退出成功');
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                              '/login', ModalRoute.withName('/login'));
+                          Navigator.of(context).pushNamedAndRemoveUntil('/login', ModalRoute.withName('/login'));
                         }
                       },
                       tooltip: '退出登录',
@@ -124,22 +127,16 @@ class AppDrawer extends StatelessWidget {
               width: 60.0,
               child: UserAccountsDrawerHeader(
                 accountName: Shimmer.fromColors(
-                    child: Text('Username'),
-                    baseColor: Colors.grey[300],
-                    highlightColor: Colors.white),
+                    child: Text('Username'), baseColor: Colors.grey[300], highlightColor: Colors.white),
                 accountEmail: Shimmer.fromColors(
-                    child: Text('a*****@email.com'),
-                    baseColor: Colors.grey[300],
-                    highlightColor: Colors.white),
+                    child: Text('a*****@email.com'), baseColor: Colors.grey[300], highlightColor: Colors.white),
                 currentAccountPicture: Shimmer.fromColors(
                   baseColor: Colors.grey[300],
                   highlightColor: Colors.white,
                   child: Container(
                     width: 70,
                     height: 70,
-                    decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        borderRadius: BorderRadius.circular(100.0)),
+                    decoration: BoxDecoration(color: Colors.grey[300], borderRadius: BorderRadius.circular(100.0)),
                   ),
                 ),
               ),

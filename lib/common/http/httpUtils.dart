@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_demo/common/app_style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HttpUtils {
@@ -64,6 +65,7 @@ class HttpUtils {
       result = response.data;
 //      print('response：' + response.toString());
     } on DioError catch (e) {
+      showToast('系统错误，请稍后重试!');
       print('request error:' + e.toString());
     }
     return result;
