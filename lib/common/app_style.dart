@@ -36,6 +36,6 @@ showToast(String msg) {
     msg: msg,
     toastLength: Toast.LENGTH_LONG,
     gravity: ToastGravity.CENTER,
-    timeInSecForIos: 2,
+    timeInSecForIos: 1,
   );
 }

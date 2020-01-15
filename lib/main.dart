@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_demo/Button.dart';
 import 'package:flutter_demo/common/http/httpEntity.dart';
 import 'package:flutter_demo/routes/edit_user.dart';
@@ -20,6 +21,8 @@ class App extends StatelessWidget {
   final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
 
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+        Theme.of(context).brightness == Brightness.dark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark);
     return MaterialApp(
       title: appTitle,
       initialRoute: '/',
@@ -90,7 +93,7 @@ class App extends StatelessWidget {
     //检测token是否有效
     final userInfo = await getUserInfo();
 
-    if (token == '' || token == null || userInfo['code'] != 200) {
+    if (token == '' || token == null || userInfo == null || userInfo['code'] != 200) {
       navigatorKey.currentState.pushNamedAndRemoveUntil(
         loginPath,
         (route) => route == null,
