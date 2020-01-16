@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/common/http/httpEntity.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_demo/routes/article_detail.dart';
 //import 'package:transparent_image/transparent_image.dart';
 
 class NewsList extends StatefulWidget {
@@ -15,7 +16,9 @@ class _MyNewsList extends State<NewsList> {
   static const endTag = 'end';
   var items = <dynamic>[endTag];
 
-//  List items = new List();
+  //src=web&tagId=5a96291f6fb9a0535b535438&page=0&pageSize=2&sort=rankIndex
+  int page = 1;
+  int totalItem = 0;
 
   // get data
   _getMoreData() async {
@@ -24,11 +27,21 @@ class _MyNewsList extends State<NewsList> {
         isLoading = true;
       });
     }
-    final response = await getNewsList();
+    Map<String, dynamic> dataMap = {
+      "src": "web",
+      "tagId": "5a96291f6fb9a0535b535438",
+      "page": page,
+      "pageSize": 10,
+      "sort": "rankIndex"
+    };
+    final response = await getNewsList(dataMap);
+//    print(response);
     setState(() {
+      page += 1;
+      totalItem = response['d']['total'];
       isLoading = false;
-      //
-      items.insertAll(items.length - 1, response['data']);
+      items.insertAll(items.length - 1, response['d']['entrylist']);
+//      print(page.toString() + '--------' + totalItem.toString());
     });
   }
 
@@ -38,9 +51,7 @@ class _MyNewsList extends State<NewsList> {
     this._getMoreData();
     //滑动到底部获取数据
     _scrollController.addListener(() {
-      if (_scrollController.position.pixels ==
-              _scrollController.position.maxScrollExtent &&
-          items.length < 20) {
+      if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent && items.length < totalItem) {
         this._getMoreData();
       }
     });
@@ -57,9 +68,10 @@ class _MyNewsList extends State<NewsList> {
       itemCount: items.length - 1,
 //      itemExtent: 80.0,
       itemBuilder: (BuildContext context, int index) {
+//        print(index.toString()+'----'+items.length.toString());
         if (index == (items.length - 2)) {
           //最后一个
-          if (items.length > 20) {
+          if (items.length > totalItem) {
             return Container(
                 alignment: Alignment.center,
                 padding: EdgeInsets.all(16.0),
@@ -71,17 +83,14 @@ class _MyNewsList extends State<NewsList> {
             return Container(
               padding: const EdgeInsets.all(16.0),
               alignment: Alignment.center,
-              child: SizedBox(
-                  width: 24.0,
-                  height: 24.0,
-                  child: CircularProgressIndicator(strokeWidth: 2.0)),
+              child: SizedBox(width: 24.0, height: 24.0, child: CircularProgressIndicator(strokeWidth: 2.0)),
             );
           }
         } else {
           return Center(
             child: ListTile(
               leading: CachedNetworkImage(
-                imageUrl: items[index]['imgList'][0].toString().trim(),
+                imageUrl: items[index]['user']['avatarLarge'].trim(),
                 placeholder: (context, url) => CircularProgressIndicator(),
                 errorWidget: (context, url, error) => Icon(Icons.error),
                 width: 100.0,
@@ -115,10 +124,15 @@ class _MyNewsList extends State<NewsList> {
                 style: Theme.of(context).textTheme.body1,
               ),
               subtitle: Text(
-                items[index]['source'],
+                items[index]['createdAt'],
               ),
               onTap: () {
-                print(items[index]);
+                Navigator.of(context).push(new MaterialPageRoute(builder: (_) {
+                  return new ArticleDetail(
+                    url: items[index]['originalUrl'],
+                    title: items[index]['title'],
+                  );
+                }));
               },
               trailing: Container(
                   child: Icon(
@@ -142,7 +156,7 @@ class _MyNewsList extends State<NewsList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("ListView"),
+        title: Text("Flutter Article"),
         centerTitle: true,
       ),
       body: Container(

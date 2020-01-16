@@ -63,10 +63,8 @@ class HttpUtils {
           options:
               new Options(method: method, headers: {"Access-Token": token}));
       result = response.data;
-//      print('response：' + response.toString());
     } on DioError catch (e) {
-      showToast('系统错误，请稍后重试!');
-      print('request error:' + e.toString());
+      print('request error:' + e.message);
     }
     return result;
   }

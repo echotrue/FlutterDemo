@@ -8,7 +8,7 @@ import 'package:flutter_demo/routes/edit_user.dart';
 import 'package:flutter_demo/routes/future.dart';
 import 'package:flutter_demo/routes/home.dart';
 import 'package:flutter_demo/routes/project.dart';
-import 'package:flutter_demo/routes/listtile.dart';
+import 'package:flutter_demo/routes/article.dart';
 import 'package:flutter_demo/routes/login.dart';
 import 'package:flutter_demo/routes/project_edit.dart';
 import 'package:flutter_demo/routes/user_center.dart';
@@ -94,10 +94,11 @@ class App extends StatelessWidget {
     final userInfo = await getUserInfo();
 
     if (token == '' || token == null || userInfo == null || userInfo['code'] != 200) {
-      navigatorKey.currentState.pushNamedAndRemoveUntil(
+      print('token失效');
+      /*navigatorKey.currentState.pushNamedAndRemoveUntil(
         loginPath,
         (route) => route == null,
-      );
+      );*/
     }
   }
 }

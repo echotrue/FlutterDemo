@@ -13,14 +13,9 @@ class AppDrawer extends StatelessWidget {
       future: getUserInfo(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.hasError) {
+          if (snapshot.hasError || snapshot.data == null || snapshot.data['code'] != 200) {
             Navigator.of(context).pushNamedAndRemoveUntil('login', ModalRoute.withName('/login'));
-            return showToast(snapshot.data['msg']);
-          }
-
-          if (snapshot.data == null || snapshot.data['code'] != 200) {
-            Navigator.of(context).pushNamedAndRemoveUntil('login', ModalRoute.withName('/login'));
-//            Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => route == null);
+//            return showToast(snapshot.data['msg']);
           }
           var userInfo = snapshot.data['result'];
           return Drawer(
@@ -57,6 +52,16 @@ class AppDrawer extends StatelessWidget {
                     )
                   ],
                 ),
+              ),
+              ListTile(
+                leading: Icon(Icons.bookmark),
+                title: Text(
+                  'Flutter Article',
+                  style: Theme.of(context).textTheme.body1,
+                ),
+                onTap: () {
+                  Navigator.pushNamed(context, '/news_list');
+                },
               ),
               ListTile(
                 leading: Icon(Icons.bookmark),
@@ -98,16 +103,7 @@ class AppDrawer extends StatelessWidget {
                   Navigator.pushNamed(context, '/sync');
                 },
               ),
-              ListTile(
-                leading: Icon(Icons.bookmark),
-                title: Text(
-                  'ListView Demo',
-                  style: Theme.of(context).textTheme.body1,
-                ),
-                onTap: () {
-                  Navigator.pushNamed(context, '/news_list');
-                },
-              ),
+
               ListTile(
                 leading: Icon(Icons.bookmark),
                 title: Text(

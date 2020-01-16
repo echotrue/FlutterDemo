@@ -13,18 +13,18 @@ class Home extends StatelessWidget {
           title: Text(title),
           centerTitle: true,
           actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.print),
-              onPressed: () {},
-              color: Colors.white,
-            ),
             PopupMenuButton(itemBuilder: (BuildContext context) {
               return [
                 PopupMenuItem(child: Text('share')),
                 PopupMenuItem(child: Text('favorite')),
                 PopupMenuItem(child: Text('about'))
               ];
-            })
+            }),
+            IconButton(
+              icon: Icon(Icons.print),
+              onPressed: () {},
+              color: Colors.white,
+            )
           ],
         ),
         body: Center(child: Column()),
