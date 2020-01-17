@@ -30,7 +30,7 @@ class App extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.blue,
         primarySwatch: Colors.blue,
-        fontFamily: 'HeadlandOne , AppFont',
+        fontFamily: 'HeadlandOne',
         /*textTheme: TextTheme(
             headline: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
             title: TextStyle(fontSize: 16.0),

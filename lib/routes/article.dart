@@ -76,7 +76,7 @@ class _MyNewsList extends State<NewsList> {
                 alignment: Alignment.center,
                 padding: EdgeInsets.all(16.0),
                 child: Text(
-                  "没有更多了",
+                  "这就是我的底线",
                   style: TextStyle(color: Colors.grey),
                 ));
           } else {
@@ -89,35 +89,15 @@ class _MyNewsList extends State<NewsList> {
         } else {
           return Center(
             child: ListTile(
-              leading: CachedNetworkImage(
-                imageUrl: items[index]['user']['avatarLarge'].trim(),
-                placeholder: (context, url) => CircularProgressIndicator(),
-                errorWidget: (context, url, error) => Icon(Icons.error),
-                width: 100.0,
-                fit: BoxFit.cover,
-              ),
-              /*leading: FadeInImage.memoryNetwork(
-                placeholder: kTransparentImage,
-                image: items[index]['imgList'][0].toString().trim(),
-                fit: BoxFit.cover,
-                width: 100.0,
-              ),*/
-              /*leading: Image.network(
-                items[index]['imgList'][0].toString().trim(),
-                fit: BoxFit.cover,
-                width: 100.0,
-                loadingBuilder: (BuildContext context, Widget child,
-                    ImageChunkEvent loadingProgress) {
-                  if (loadingProgress == null) {
-                    return child;
-                  }
-                  return RefreshProgressIndicator();
-                  */ /*return CircularProgressIndicator(
+              contentPadding: EdgeInsets.only(left: 16, right: 16),
+              leading: SizedBox(
+                  width: 56,
+                  height: 56,
+                  child: CircleAvatar(
                     backgroundColor: Colors.grey,
-                    semanticsLabel: "loading",
-                  );*/ /*
-                },
-              ),*/
+                    backgroundImage: NetworkImage(items[index]['user']['avatarLarge'].trim()),
+                    foregroundColor: Color(0x55000000),
+                  )),
               title: Text(
                 items[index]['title'],
                 maxLines: 2,
@@ -127,18 +107,21 @@ class _MyNewsList extends State<NewsList> {
                 items[index]['createdAt'],
               ),
               onTap: () {
-                Navigator.of(context).push(new MaterialPageRoute(builder: (_) {
-                  return new ArticleDetail(
-                    url: items[index]['originalUrl'],
-                    title: items[index]['title'],
-                  );
-                }));
+                Navigator.of(context).push(new MaterialPageRoute(
+                  builder: (_) {
+                    return new ArticleDetail(
+                      url: items[index]['originalUrl'],
+                      title: items[index]['title'],
+                    );
+                  },
+                ));
               },
               trailing: Container(
-                  child: Icon(
-                Icons.chevron_right,
-                size: 46.0,
-              )),
+                child: Icon(
+                  Icons.chevron_right,
+                  size: 30.0,
+                ),
+              ),
             ),
           );
         }
@@ -160,7 +143,8 @@ class _MyNewsList extends State<NewsList> {
         centerTitle: true,
       ),
       body: Container(
-        child: items.length == 1 ? new LinearProgressIndicator() : _buildList(),
+        child: items.length == 1 ? CircularProgressIndicator() : _buildList(),
+        alignment: Alignment.center,
       ),
       resizeToAvoidBottomPadding: false,
     );

@@ -76,16 +76,6 @@ class AppDrawer extends StatelessWidget {
               ListTile(
                 leading: Icon(Icons.bookmark),
                 title: Text(
-                  'Form demo',
-                  style: Theme.of(context).textTheme.body1,
-                ),
-                onTap: () {
-                  Navigator.pushNamed(context, '/form');
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.bookmark),
-                title: Text(
                   'Button',
                   style: Theme.of(context).textTheme.body1,
                 ),
