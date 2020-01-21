@@ -33,8 +33,14 @@ Future getUserInfo() {
       'code': 200,
       'result': {
         'user_name': 'axlrose',
+        'user_realname': 'axlrose',
         'user_email': 'axlrose.huang@gmail.com',
-        'user_avatar': 'https://user-gold-cdn.xitu.io/1519790365175e2d3ba2174d5c8f3fdc4687a8bbf5768.jpg'
+        'user_avatar': 'https://user-gold-cdn.xitu.io/1519790365175e2d3ba2174d5c8f3fdc4687a8bbf5768.jpg',
+        'user_phone': '13399999999',
+        'user_status': 1,
+        'user_role_id': 1,
+        'user_created_time': '2020-01-01 00:00:00',
+        'role': {'name': '超级管理员'}
       }
     };
   });

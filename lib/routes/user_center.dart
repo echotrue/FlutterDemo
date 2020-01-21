@@ -56,9 +56,31 @@ class _UserCenter extends State<UserCenter> {
           actions: <Widget>[
             Row(children: <Widget>[
               Padding(
-                padding: EdgeInsets.only(right: 10),
+                padding: EdgeInsets.only(right: 15),
 //                child: GestureDetector(
-                child: FlatButton(
+                child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return EditUser(
+                            realName: realName,
+                            userId: userId,
+                            phone: phone,
+                            email: email,
+                            userName: userName,
+                          );
+                        }),
+                      );
+                    },
+//                    hoverColor: Colors.red,
+//                    focusColor: Colors.blue,
+//                    splashColor: Colors.green,
+//                    highlightColor: Colors.purple,
+                    child: FlatButton(onPressed: null, child: Text('编辑信息',style: TextStyle(decorationColor: Colors.red),),splashColor: Colors.green,focusColor: Colors.redAccent,)
+//                  child: Text('编辑信息', style: TextStyle(fontSize: 14,color: Colors.black)),
+                    ),
+                /*child: FlatButton(
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -79,7 +101,7 @@ class _UserCenter extends State<UserCenter> {
 //                  splashColor: Colors.purple,
                   child: Text('编辑信息', style: TextStyle(fontSize: 14)),
                   padding: EdgeInsets.all(5),
-                ),
+                ),*/
               ),
             ])
           ],
@@ -91,8 +113,7 @@ class _UserCenter extends State<UserCenter> {
               showToast(snapshot.data['msg']);
               return null;
             }
-            if (snapshot.connectionState == ConnectionState.done &&
-                snapshot.hasData) {
+            if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
               _setUserInfo(snapshot.data['result']);
               return _userInfo(snapshot.data['result']);
             }
@@ -153,9 +174,7 @@ class _UserCenter extends State<UserCenter> {
               child: Container(
                 width: 100,
                 height: 100,
-                decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.circular(100.0)),
+                decoration: BoxDecoration(color: Colors.grey[300], borderRadius: BorderRadius.circular(100.0)),
               ),
             ),
           ),
@@ -169,57 +188,43 @@ class _UserCenter extends State<UserCenter> {
                   Container(
                     width: 100,
                     height: 20,
-                    decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        borderRadius: BorderRadius.circular(100.0)),
+                    decoration: BoxDecoration(color: Colors.grey[300], borderRadius: BorderRadius.circular(100.0)),
                   ),
                   Divider(),
                   Container(
                     width: 100,
                     height: 20,
-                    decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        borderRadius: BorderRadius.circular(100.0)),
+                    decoration: BoxDecoration(color: Colors.grey[300], borderRadius: BorderRadius.circular(100.0)),
                   ),
                   SizedBox(height: 10),
                   Container(
                     width: 200,
                     height: 20,
-                    decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        borderRadius: BorderRadius.circular(100.0)),
+                    decoration: BoxDecoration(color: Colors.grey[300], borderRadius: BorderRadius.circular(100.0)),
                   ),
                   SizedBox(height: 10),
                   Container(
                     width: 120,
                     height: 20,
-                    decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        borderRadius: BorderRadius.circular(100.0)),
+                    decoration: BoxDecoration(color: Colors.grey[300], borderRadius: BorderRadius.circular(100.0)),
                   ),
                   SizedBox(height: 10),
                   Container(
                     width: 100,
                     height: 20,
-                    decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        borderRadius: BorderRadius.circular(100.0)),
+                    decoration: BoxDecoration(color: Colors.grey[300], borderRadius: BorderRadius.circular(100.0)),
                   ),
                   SizedBox(height: 10),
                   Container(
                     width: 100,
                     height: 20,
-                    decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        borderRadius: BorderRadius.circular(100.0)),
+                    decoration: BoxDecoration(color: Colors.grey[300], borderRadius: BorderRadius.circular(100.0)),
                   ),
                   SizedBox(height: 10),
                   Container(
                     width: 180,
                     height: 20,
-                    decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        borderRadius: BorderRadius.circular(100.0)),
+                    decoration: BoxDecoration(color: Colors.grey[300], borderRadius: BorderRadius.circular(100.0)),
                   ),
                   SizedBox(height: 10),
 //                Text(userInfo['role']['name']),

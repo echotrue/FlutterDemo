@@ -46,7 +46,7 @@ class _ProjectList extends State<ProjectList> {
     }
     final response = await projectList({"pageNo": pageNo, "pageSize": pageSize});
 
-//    print(response);
+    print(response);
     var step = response['result']['pageNo'] >= response['result']['totalPage'] ? 0 : 1;
 
     setState(() {
